@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard - Pet Adoption</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f8fb;
+    }
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav class="navbar navbar-dark bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/user/dashboard">🐾 Pet Adoption</a>
+    <div class="d-flex">
+      <a href="/my_applications" class="btn btn-outline-light me-2">My Applications</a>
+      <a href="/logout" class="btn btn-light">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <h2 class="mb-4 text-center">Welcome, {{ session['username'] }}!</h2>
+
+  <div class="row mb-4 justify-content-center">
+    <div class="col-md-6">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search pets by name or type...">
+    </div>
+  </div>
+
+  <div id="petList" class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    <!-- Pets will be loaded here via JS -->
+  </div>
+</div>
+
+<footer class="text-center text-white py-4 bg-info mt-auto">
+  &copy; 2024 Pet Adoption Platform. All rights reserved.
+</footer>
+
+<script>
+  async function loadPets() {
+    const res = await fetch('/get_pets');
+    const pets = await res.json();
+    window.allPets = pets;
+    renderPets(pets);
+  }
+
+  function renderPets(data) {
+    const container = document.getElementById('petList');
+    container.innerHTML = data.map(pet => `
+      <div class="col">
+        <div class="card h-100 d-flex flex-column">
+          <img src="/${pet.image_url}" class="card-img-top" alt="${pet.name}" style="height: 250px; object-fit: cover;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${pet.name}</h5>
+            <p class="card-text">Breed: ${pet.breed}</p>
+            <p class="card-text"><strong>Type:</strong> ${pet.type}</p>
+            <div class="mt-auto">
+              <a href="/pet_details/${pet.id}" class="btn btn-info w-100">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('searchInput').addEventListener('input', () => {
+    const keyword = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = window.allPets.filter(p =>
+      p.name.toLowerCase().includes(keyword) ||
+      p.type.toLowerCase().includes(keyword)
+    );
+    renderPets(filtered);
+  });
+
+  loadPets();
+</script>
+</body>
+</html>

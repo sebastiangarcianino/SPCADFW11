@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pet Adoption Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+    }
+    .content-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+<div class="content-wrapper">
+  <nav class="navbar navbar-dark bg-info">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">🐾 Pet Adoption Platform</a>
+      <div class="d-flex">
+        <a href="/login" class="btn btn-outline-light me-2">Login</a>
+        <a href="/register" class="btn btn-outline-light">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5 text-center main-content d-flex flex-column justify-content-center align-items-center">
+    <h1 class="mb-4">🐶 Welcome to the Pet Adoption Platform</h1>
+    <p class="lead">Browse available pets, apply for adoption, and give them a loving home.</p>
+    <div class="mt-4">
+      <a href="/login" class="btn btn-info btn-lg me-3">Login</a>
+      <a href="/register" class="btn btn-outline-info btn-lg">Register</a>
+    </div>
+  </div>
+
+  <footer class="text-center text-white py-4 bg-info mt-auto">
+    &copy; 2024 Pet Adoption Platform. All rights reserved.
+  </footer>
+</div>
+</body>
+</html>

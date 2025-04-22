@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Pet Types</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="content-wrapper">
+  <nav class="navbar navbar-dark bg-info">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/admin/dashboard">🐾 Admin Dashboard</a>
+      <div class="d-flex">
+        <a href="/admin/pets" class="btn btn-outline-light me-2">Pets</a>
+        <a href="/admin/adoptions" class="btn btn-outline-light me-2">Adoptions</a>
+        <a href="/admin/users" class="btn btn-outline-light me-2">Users</a>
+        <a href="/admin/pet_types" class="btn btn-outline-light me-2">Pet Types</a>
+        <a href="/logout" class="btn btn-light">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4 main-content">
+    <h2 class="mb-4">Manage Pet Types</h2>
+
+    {% if error_message %}
+      <div class="alert alert-danger">{{ error_message }}</div>
+    {% endif %}
+
+    <form action="/admin/pet_types" method="POST" class="row g-3 mb-4">
+      <div class="col-md-4">
+        <input type="text" name="type_name" class="form-control" placeholder="Type Name" required>
+      </div>
+      <div class="col-md-6">
+        <input type="text" name="description" class="form-control" placeholder="Description">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">Add Type</button>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-info">
+          <tr>
+            <th>#</th>
+            <th>Type Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for type in pet_types %}
+          <tr>
+            <td>{{ type.id }}</td>
+            <td>{{ type.type_name }}</td>
+            <td>{{ type.description }}</td>
+            <td>
+              <form action="/admin/delete_pet_type" method="POST" onsubmit="return confirm('Delete this type?');">
+                <input type="hidden" name="pet_type_id" value="{{ type.id }}">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="text-center text-white py-4 bg-info mt-auto">
+    &copy; 2024 Pet Adoption Platform. All rights reserved.
+  </footer>
+</div>
+</body>
+</html>
