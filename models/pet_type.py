@@ -1,7 +1,6 @@
 from . import db
 from sqlalchemy import Sequence
 
-
 class PetType(db.Model):
     __bind_key__ = 'db'
     id = db.Column(db.Integer, Sequence('PetType_sequence'), unique=True, nullable=False, primary_key=True)

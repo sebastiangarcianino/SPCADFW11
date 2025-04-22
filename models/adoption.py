@@ -2,7 +2,6 @@ from . import db
 from sqlalchemy import Sequence
 from datetime import datetime
 
-
 class Adoption(db.Model):
     __bind_key__ = 'db'
     id = db.Column(db.Integer, Sequence('Adoption_sequence'), unique=True, nullable=False, primary_key=True)
